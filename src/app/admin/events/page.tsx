@@ -17,6 +17,7 @@ import {
   Archive,
   ArchiveRestore
 } from 'lucide-react'
+import { PlusIcon } from '@/components/ui/PlusIcon'
 
 interface Event {
   id: string
@@ -86,7 +87,7 @@ export default function AdminEventsPage() {
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <Button asChild>
               <Link href="/admin/events/new">
-                <Plus className="h-4 w-4 mr-2" />
+                <PlusIcon className="h-4 w-4 mr-2" />
                 Add Event
               </Link>
             </Button>
@@ -256,7 +257,7 @@ export default function AdminEventsPage() {
                 <div className="mt-6">
                   <Button asChild>
                     <Link href="/admin/events/new">
-                      <Plus className="h-4 w-4 mr-2" />
+                      <PlusIcon className="h-4 w-4 mr-2" />
                       Add Event
                     </Link>
                   </Button>
