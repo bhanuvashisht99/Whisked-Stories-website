@@ -97,10 +97,10 @@ export default function CookiesPolicy() {
               <h3 className="text-xl font-semibold text-neutral-800 mb-3">5.1 Browser Settings</h3>
               <p className="text-neutral-700 mb-4">You can control cookies through your browser settings:</p>
               <ul className="text-neutral-700 mb-6 list-disc pl-6">
-                <li><strong>Chrome:</strong> Settings > Privacy & Security > Cookies</li>
-                <li><strong>Firefox:</strong> Settings > Privacy & Security > Cookies</li>
-                <li><strong>Safari:</strong> Preferences > Privacy > Cookies</li>
-                <li><strong>Edge:</strong> Settings > Privacy > Cookies</li>
+                <li><strong>Chrome:</strong> Settings {`>`} Privacy & Security {`>`} Cookies</li>
+                <li><strong>Firefox:</strong> Settings {`>`} Privacy & Security {`>`} Cookies</li>
+                <li><strong>Safari:</strong> Preferences {`>`} Privacy {`>`} Cookies</li>
+                <li><strong>Edge:</strong> Settings {`>`} Privacy {`>`} Cookies</li>
               </ul>
 
               <h3 className="text-xl font-semibold text-neutral-800 mb-3">5.2 Cookie Banner</h3>
