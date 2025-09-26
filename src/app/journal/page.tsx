@@ -12,6 +12,9 @@ const categories = [
   'Community'
 ]
 
+// Force this page to be dynamic
+export const dynamic = 'force-dynamic'
+
 export default async function JournalPage() {
   const blogPosts = await getBlogPosts()
   const publishedPosts = (blogPosts || []).filter(post => post.is_published)

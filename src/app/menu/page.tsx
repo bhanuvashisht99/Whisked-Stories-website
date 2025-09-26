@@ -63,6 +63,9 @@ function ProductCard({ product }: { product: Product }) {
   )
 }
 
+// Force this page to be dynamic
+export const dynamic = 'force-dynamic'
+
 export default async function MenuPage() {
   const products = await getProducts({ available: true, archived: false })
   const activeProducts = products || []

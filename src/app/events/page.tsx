@@ -3,6 +3,9 @@ import { Calendar, Clock, MapPin, Users, Star, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { getEvents } from '@/lib/data/events'
 
+// Force this page to be dynamic
+export const dynamic = 'force-dynamic'
+
 export default async function EventsPage() {
   const allEvents = await getEvents()
   const featuredEvent = allEvents.find(event => event.is_featured) || allEvents[0]
