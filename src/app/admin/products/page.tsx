@@ -14,7 +14,8 @@ import {
   Archive,
   ArchiveRestore,
   Eye,
-  Copy
+  Copy,
+  Package
 } from 'lucide-react'
 
 export default function AdminProductsPage() {

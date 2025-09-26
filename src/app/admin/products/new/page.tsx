@@ -51,17 +51,22 @@ export default function NewProductPage() {
     setLoading(true)
 
     try {
-      // For now, just simulate saving to database
-      console.log('Saving product:', formData)
+      const response = await fetch('/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
 
-      // TODO: Replace with actual Supabase call
-      // const { error } = await supabase
-      //   .from('products')
-      //   .insert([formData])
+      const result = await response.json()
 
-      // For now, just show success and redirect
-      alert('Product created successfully!')
-      router.push('/admin/products')
+      if (response.ok) {
+        alert('Product created successfully!')
+        router.push('/admin/products')
+      } else {
+        alert(result.error || 'Error creating product. Please try again.')
+      }
     } catch (error) {
       console.error('Error creating product:', error)
       alert('Error creating product. Please try again.')

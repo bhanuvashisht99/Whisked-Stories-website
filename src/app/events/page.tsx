@@ -126,10 +126,10 @@ export default function EventsPage() {
                       <Users className="h-5 w-5 text-primary mt-0.5" />
                       <div>
                         <div className="font-medium text-neutral-900">
-                          {featuredEvent.current_attendees}/{featuredEvent.max_attendees} Spots
+                          {featuredEvent.current_attendees}/{featuredEvent.max_attendees || 0} Spots
                         </div>
                         <div className="text-sm text-neutral-600">
-                          {featuredEvent.max_attendees - featuredEvent.current_attendees} spots remaining
+                          {(featuredEvent.max_attendees || 0) - featuredEvent.current_attendees} spots remaining
                         </div>
                       </div>
                     </div>
@@ -137,7 +137,7 @@ export default function EventsPage() {
                     <div className="flex items-start space-x-3">
                       <span className="w-5 h-5 text-primary mt-0.5 text-lg">₹</span>
                       <div>
-                        <div className="font-medium text-neutral-900">₹{featuredEvent.price.toLocaleString('en-IN')}</div>
+                        <div className="font-medium text-neutral-900">₹{(featuredEvent.price || 0).toLocaleString('en-IN')}</div>
                         <div className="text-sm text-neutral-600">Includes all tastings & refreshments</div>
                       </div>
                     </div>
@@ -217,19 +217,19 @@ export default function EventsPage() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2 text-neutral-600">
                           <Users className="h-4 w-4" />
-                          <span>{event.current_attendees}/{event.max_attendees} spots</span>
+                          <span>{event.current_attendees}/{event.max_attendees || 0} spots</span>
                         </div>
                         <div className="text-lg font-medium text-primary">
-                          ₹{event.price.toLocaleString('en-IN')}
+                          ₹{(event.price || 0).toLocaleString('en-IN')}
                         </div>
                       </div>
                     </div>
 
                     <Button
                       className="w-full bg-primary hover:bg-primary/90 text-white rounded-full"
-                      disabled={event.current_attendees >= event.max_attendees}
+                      disabled={event.current_attendees >= (event.max_attendees || 0)}
                     >
-                      {event.current_attendees >= event.max_attendees ? 'Fully Booked' : 'Join Event'}
+                      {event.current_attendees >= (event.max_attendees || 0) ? 'Fully Booked' : 'Join Event'}
                     </Button>
                   </div>
                 </div>
@@ -313,7 +313,7 @@ export default function EventsPage() {
                 className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full text-base font-medium"
                 asChild
               >
-                <Link href="/custom-orders"className="flex items-center gap-2"> 
+                <Link href="/custom-orders" className="flex items-center gap-2"> 
                   Inquire About Private Events
                   <ArrowRight className="h-4 w-4" />
                 </Link>
