@@ -7,10 +7,10 @@ export const razorpayConfig = {
 }
 
 // Initialize Razorpay instance (server-side only)
-export const razorpay = new Razorpay({
+export const razorpay = razorpayConfig.key_id ? new Razorpay({
   key_id: razorpayConfig.key_id,
   key_secret: razorpayConfig.key_secret,
-})
+}) : null
 
 // Razorpay payment options interface
 export interface RazorpayOptions {
@@ -32,6 +32,10 @@ export interface RazorpayOptions {
 
 // Create Razorpay order
 export async function createRazorpayOrder(amount: number, receipt: string, currency = 'INR') {
+  if (!razorpay) {
+    throw new Error('Razorpay not configured')
+  }
+
   try {
     const order = await razorpay.orders.create({
       amount: amount * 100, // Convert to paise
