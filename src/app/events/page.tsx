@@ -1,43 +1,12 @@
 import Link from 'next/link'
-import { mockEvents } from '@/lib/mock-data'
 import { Calendar, Clock, MapPin, Users, Star, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { getEvents } from '@/lib/data/events'
 
-const upcomingEvents = [
-  ...mockEvents,
-  {
-    id: '3',
-    title: 'Monsoon Cake Tasting Evening',
-    description: 'Join us for an intimate evening celebrating monsoon flavors. Sample our seasonal collection with warm chai and good company.',
-    date: '2024-06-15',
-    time: '6:00 PM - 8:00 PM',
-    location: 'Whisked Stories Café, Mumbai',
-    images: ['/api/placeholder/500/300'],
-    is_featured: false,
-    max_attendees: 25,
-    current_attendees: 12,
-    price: 800,
-    created_at: '2024-04-01'
-  },
-  {
-    id: '4',
-    title: 'Summer Solstice Sweet Celebration',
-    description: 'Celebrate the longest day with our community! Enjoy seasonal treats, live acoustic music, and connect with fellow food lovers.',
-    date: '2024-06-21',
-    time: '4:00 PM - 7:00 PM',
-    location: 'Whisked Stories Garden Space, Mumbai',
-    images: ['/api/placeholder/500/300'],
-    is_featured: true,
-    max_attendees: 40,
-    current_attendees: 18,
-    price: 1200,
-    created_at: '2024-04-05'
-  }
-]
-
-export default function EventsPage() {
-  const featuredEvent = upcomingEvents.find(event => event.is_featured) || upcomingEvents[0]
-  const regularEvents = upcomingEvents.filter(event => !event.is_featured)
+export default async function EventsPage() {
+  const allEvents = await getEvents()
+  const featuredEvent = allEvents.find(event => event.is_featured) || allEvents[0]
+  const regularEvents = allEvents.filter(event => !event.is_featured)
 
   return (
     <main className="pt-20">
@@ -65,7 +34,8 @@ export default function EventsPage() {
       </section>
 
       {/* Featured Event */}
-      <section className="py-16 bg-white">
+      {featuredEvent && (
+        <section className="py-16 bg-white">
         <div className="container">
           <div className="max-w-6xl mx-auto">
             <div className="mb-8">
@@ -103,14 +73,14 @@ export default function EventsPage() {
                       <Calendar className="h-5 w-5 text-primary mt-0.5" />
                       <div>
                         <div className="font-medium text-neutral-900">
-                          {new Date(featuredEvent.date).toLocaleDateString('en-IN', {
+                          {new Date(featuredEvent.event_date).toLocaleDateString('en-IN', {
                             weekday: 'long',
                             year: 'numeric',
                             month: 'long',
                             day: 'numeric'
                           })}
                         </div>
-                        <div className="text-sm text-neutral-600">{featuredEvent.time}</div>
+                        <div className="text-sm text-neutral-600">{featuredEvent.event_time}</div>
                       </div>
                     </div>
 
@@ -163,7 +133,8 @@ export default function EventsPage() {
             </div>
           </div>
         </div>
-      </section>
+        </section>
+      )}
 
       {/* All Events */}
       <section className="py-16 bg-neutral-50">
@@ -205,13 +176,13 @@ export default function EventsPage() {
                       <div className="flex items-center space-x-2 text-neutral-600">
                         <Calendar className="h-4 w-4" />
                         <span>
-                          {new Date(event.date).toLocaleDateString('en-IN', {
+                          {new Date(event.event_date).toLocaleDateString('en-IN', {
                             month: 'short',
                             day: 'numeric'
                           })}
                         </span>
                         <Clock className="h-4 w-4 ml-2" />
-                        <span>{event.time}</span>
+                        <span>{event.event_time}</span>
                       </div>
 
                       <div className="flex items-center justify-between">

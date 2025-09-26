@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { mockProducts } from '@/lib/mock-data'
 import { Filter, ShoppingCart, Info, Star } from 'lucide-react'
-import { Product } from '@/types'
+import { getProducts } from '@/lib/data/products'
+import type { Tables } from '@/lib/supabase-types'
+
+type Product = Tables<'products'>
 
 const categories = ['All', 'Chocolate', 'Fruit', 'Classic', 'Floral', 'Seasonal']
 const seasons = ['All', 'all-year', 'spring', 'summer', 'autumn', 'winter']
@@ -44,7 +46,7 @@ function ProductCard({ product }: { product: Product }) {
             Serves {product.serving_size}
           </div>
           <div className="flex flex-wrap gap-1 mb-2">
-            {product.allergens.map((allergen) => (
+            {(product.allergens || []).map((allergen) => (
               <span key={allergen} className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">
                 {allergen}
               </span>
@@ -61,8 +63,9 @@ function ProductCard({ product }: { product: Product }) {
   )
 }
 
-export default function MenuPage() {
-  const activeProducts = mockProducts.filter(product => !product.is_archived)
+export default async function MenuPage() {
+  const products = await getProducts({ available: true, archived: false })
+  const activeProducts = products || []
 
   return (
     <main className="pt-20 pb-12">
