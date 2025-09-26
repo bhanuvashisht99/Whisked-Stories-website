@@ -124,8 +124,8 @@ export default function HomePage() {
               <div className="lg:col-span-5">
                 <div className="relative flex items-center justify-center">
                   <img
-                    src="/images/Ws.png"
-                    alt="Whisked Stories Bakery - Hand-drawn illustration showing rustic cabin with ESTD. 2025"
+                    src="/images/Ws1.png"
+                    alt="Whisked Stories Bakery - Hand-drawn illustration of bakery storefront with cake displays"
                     className="w-full h-auto object-contain filter brightness-90 contrast-110"
                     style={{
                       filter: 'brightness(0.9) contrast(1.1) sepia(0.1) hue-rotate(10deg) saturate(0.95)',
