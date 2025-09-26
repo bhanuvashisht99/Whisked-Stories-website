@@ -99,10 +99,10 @@ export default async function EventsPage() {
                       <Users className="h-5 w-5 text-primary mt-0.5" />
                       <div>
                         <div className="font-medium text-neutral-900">
-                          {featuredEvent.current_attendees}/{featuredEvent.max_attendees || 0} Spots
+                          {featuredEvent.current_attendees || 0}/{featuredEvent.max_attendees || 0} Spots
                         </div>
                         <div className="text-sm text-neutral-600">
-                          {(featuredEvent.max_attendees || 0) - featuredEvent.current_attendees} spots remaining
+                          {(featuredEvent.max_attendees || 0) - (featuredEvent.current_attendees || 0)} spots remaining
                         </div>
                       </div>
                     </div>
@@ -191,7 +191,7 @@ export default async function EventsPage() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2 text-neutral-600">
                           <Users className="h-4 w-4" />
-                          <span>{event.current_attendees}/{event.max_attendees || 0} spots</span>
+                          <span>{event.current_attendees || 0}/{event.max_attendees || 0} spots</span>
                         </div>
                         <div className="text-lg font-medium text-primary">
                           ₹{(event.price || 0).toLocaleString('en-IN')}
@@ -201,9 +201,9 @@ export default async function EventsPage() {
 
                     <Button
                       className="w-full bg-primary hover:bg-primary/90 text-white rounded-full"
-                      disabled={event.current_attendees >= (event.max_attendees || 0)}
+                      disabled={(event.current_attendees || 0) >= (event.max_attendees || 0)}
                     >
-                      {event.current_attendees >= (event.max_attendees || 0) ? 'Fully Booked' : 'Join Event'}
+                      {(event.current_attendees || 0) >= (event.max_attendees || 0) ? 'Fully Booked' : 'Join Event'}
                     </Button>
                   </div>
                 </div>

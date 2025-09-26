@@ -70,7 +70,7 @@ export async function getFeaturedEvents() {
 // Check if event has available spots
 export function hasAvailableSpots(event: Event): boolean {
   if (!event.max_attendees) return true
-  return event.current_attendees < event.max_attendees
+  return (event.current_attendees || 0) < event.max_attendees
 }
 
 // Get events with availability status
@@ -79,6 +79,6 @@ export async function getEventsWithAvailability() {
   return events.map(event => ({
     ...event,
     hasAvailableSpots: hasAvailableSpots(event),
-    spotsRemaining: event.max_attendees ? event.max_attendees - event.current_attendees : null
+    spotsRemaining: event.max_attendees ? event.max_attendees - (event.current_attendees || 0) : null
   }))
 }
