@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ChevronDown, ChevronUp } from 'lucide-react'
+import { useCart } from '@/contexts/cart-context'
 
 interface Product {
   id: string
@@ -21,6 +22,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product, index }: ProductCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const { addItem } = useCart()
   const maxLength = 120 // Characters to show before truncating
   const needsTruncation = product.description.length > maxLength
 
@@ -112,7 +114,20 @@ export function ProductCard({ product, index }: ProductCardProps) {
                 onClick={(e) => {
                   e.preventDefault()
                   e.stopPropagation()
-                  alert(`Added ${product.name} to cart! 🛒`)
+                  addItem({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price
+                  })
+                  // Show success message
+                  const button = e.target as HTMLButtonElement
+                  const originalText = button.textContent
+                  button.textContent = 'Added! ✓'
+                  setTimeout(() => {
+                    if (button.textContent === 'Added! ✓') {
+                      button.textContent = originalText
+                    }
+                  }, 2000)
                 }}
               >
                 Add to Cart

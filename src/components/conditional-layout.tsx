@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { Navbar } from "@/components/navigation/navbar"
 import { Footer } from "@/components/navigation/footer"
 import PageTransition from "@/components/page-transition"
+import { CartProvider } from "@/contexts/cart-context"
 
 export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -14,14 +15,14 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
     return <>{children}</>
   }
 
-  // Regular pages get full layout
+  // Regular pages get full layout with cart context
   return (
-    <>
+    <CartProvider>
       <Navbar />
       <PageTransition>
         {children}
       </PageTransition>
       <Footer />
-    </>
+    </CartProvider>
   )
 }

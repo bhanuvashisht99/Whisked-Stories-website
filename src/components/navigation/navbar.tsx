@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation'
 import { Menu, X, ShoppingCart, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { useCart } from '@/contexts/cart-context'
+import { CartDropdown } from '@/components/cart-dropdown'
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -21,6 +23,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
+  const { state } = useCart()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,16 +80,7 @@ export function Navbar() {
 
           {/* Right side actions */}
           <div className="hidden lg:flex items-center space-x-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="relative hover:bg-neutral-50"
-            >
-              <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 h-4 w-4 bg-primary text-white text-xs rounded-full flex items-center justify-center">
-                2
-              </span>
-            </Button>
+            <CartDropdown />
             <Button variant="ghost" size="sm" className="hover:bg-neutral-50">
               <User className="h-5 w-5" />
             </Button>
@@ -144,7 +138,7 @@ export function Navbar() {
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="sm" className="flex-1 mr-2">
                   <ShoppingCart className="h-4 w-4 mr-2" />
-                  Cart (2)
+                  Cart ({state.itemCount})
                 </Button>
                 <Button variant="ghost" size="sm" className="flex-1 mr-2">
                   <User className="h-4 w-4 mr-2" />
