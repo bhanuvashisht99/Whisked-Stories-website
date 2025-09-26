@@ -313,7 +313,7 @@ export default function EventsPage() {
                 className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full text-base font-medium"
                 asChild
               >
-                <Link href="/custom-orders">
+                <Link href="/custom-orders"className="flex items-center gap-2"> 
                   Inquire About Private Events
                   <ArrowRight className="h-4 w-4" />
                 </Link>
