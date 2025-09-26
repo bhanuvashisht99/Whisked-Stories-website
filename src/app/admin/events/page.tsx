@@ -86,7 +86,7 @@ export default function AdminEventsPage() {
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <Button asChild>
-              <Link href="/admin/events/new">
+              <Link href="/admin/events/new" className="flex items-center">
                 <PlusIcon className="h-4 w-4 mr-2" />
                 Add Event
               </Link>
@@ -256,7 +256,7 @@ export default function AdminEventsPage() {
               {!searchTerm && (
                 <div className="mt-6">
                   <Button asChild>
-                    <Link href="/admin/events/new">
+                    <Link href="/admin/events/new" className="flex items-center">
                       <PlusIcon className="h-4 w-4 mr-2" />
                       Add Event
                     </Link>

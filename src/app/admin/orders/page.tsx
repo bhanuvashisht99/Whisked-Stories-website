@@ -83,7 +83,7 @@ export default function AdminOrdersPage() {
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <Button asChild>
-              <Link href="/admin/orders/new">
+              <Link href="/admin/orders/new" className="flex items-center">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Order
               </Link>
@@ -221,7 +221,7 @@ export default function AdminOrdersPage() {
               {!searchTerm && (
                 <div className="mt-6">
                   <Button asChild>
-                    <Link href="/admin/orders/new">
+                    <Link href="/admin/orders/new" className="flex items-center">
                       <Plus className="h-4 w-4 mr-2" />
                       Add Order
                     </Link>

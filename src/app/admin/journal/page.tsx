@@ -91,7 +91,7 @@ export default function AdminJournalPage() {
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <Button asChild>
-              <Link href="/admin/journal/new">
+              <Link href="/admin/journal/new" className="flex items-center">
                 <Plus className="h-4 w-4 mr-2" />
                 Write New Post
               </Link>
@@ -206,7 +206,7 @@ export default function AdminJournalPage() {
                 {!searchTerm && statusFilter === 'all' && (
                   <div className="mt-6">
                     <Button asChild>
-                      <Link href="/admin/journal/new">
+                      <Link href="/admin/journal/new" className="flex items-center">
                         <Plus className="h-4 w-4 mr-2" />
                         Write New Post
                       </Link>

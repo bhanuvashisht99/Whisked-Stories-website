@@ -117,7 +117,7 @@ export default function AdminCustomersPage() {
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <Button asChild>
-              <Link href="/admin/customers/new">
+              <Link href="/admin/customers/new" className="flex items-center">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Customer
               </Link>
@@ -309,7 +309,7 @@ export default function AdminCustomersPage() {
               {!searchTerm && (
                 <div className="mt-6">
                   <Button asChild>
-                    <Link href="/admin/customers/new">
+                    <Link href="/admin/customers/new" className="flex items-center">
                       <Plus className="h-4 w-4 mr-2" />
                       Add Customer
                     </Link>

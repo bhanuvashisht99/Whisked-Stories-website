@@ -47,7 +47,7 @@ export default function AdminProductsPage() {
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <Button asChild>
-              <Link href="/admin/products/new">
+              <Link href="/admin/products/new" className="flex items-center">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Product
               </Link>
@@ -224,7 +224,7 @@ export default function AdminProductsPage() {
                 {!searchTerm && selectedFilter === 'all' && (
                   <div className="mt-6">
                     <Button asChild>
-                      <Link href="/admin/products/new">
+                      <Link href="/admin/products/new" className="flex items-center">
                         <Plus className="h-4 w-4 mr-2" />
                         Add Product
                       </Link>
