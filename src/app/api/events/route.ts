@@ -1,17 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getEvents } from '@/lib/data/events'
+import { getEvents, getAllEvents } from '@/lib/data/events'
 import { supabaseAdmin } from '@/lib/supabase'
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const featured = searchParams.get('featured')
+    const admin = searchParams.get('admin')
 
     let featuredFilter: boolean | undefined
     if (featured === 'true') featuredFilter = true
     if (featured === 'false') featuredFilter = false
 
-    const events = await getEvents(featuredFilter)
+    const events = admin === 'true'
+      ? await getAllEvents(featuredFilter)
+      : await getEvents(featuredFilter)
+
     return NextResponse.json({ events })
 
   } catch (error) {

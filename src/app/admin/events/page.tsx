@@ -45,7 +45,7 @@ export default function AdminEventsPage() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch('/api/events')
+      const response = await fetch('/api/events?admin=true')
       const data = await response.json()
       setEvents(data.events || [])
     } catch (error) {

@@ -24,6 +24,27 @@ export async function getEvents(featured?: boolean) {
   return data || []
 }
 
+// Get all events for admin (including past events)
+export async function getAllEvents(featured?: boolean) {
+  let query = supabase
+    .from('events')
+    .select('*')
+    .order('event_date', { ascending: false }) // Most recent first for admin
+
+  if (featured !== undefined) {
+    query = query.eq('is_featured', featured)
+  }
+
+  const { data, error } = await query
+
+  if (error) {
+    console.error('Error fetching all events:', error)
+    throw new Error('Failed to fetch events')
+  }
+
+  return data || []
+}
+
 // Get a single event by ID
 export async function getEvent(id: string) {
   const { data, error } = await supabase
