@@ -166,9 +166,9 @@ export default function OrderSuccessPage() {
         <div className="text-center space-y-4">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild>
-              <Link href="/menu">
-                Order More Cakes
-                <ArrowRight className="h-4 w-4 ml-2" />
+              <Link href="/menu" className="flex items-center justify-center">
+                <span>Order More Cakes</span>
+                <ArrowRight className="h-4 w-4 ml-2 flex-shrink-0" />
               </Link>
             </Button>
             <Button variant="outline" asChild>
