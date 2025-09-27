@@ -222,7 +222,7 @@ export function ContactForm({ variant = 'full', className = '' }: ContactFormPro
                 </div>
                 <div>
                   <h4 className="font-semibold">Location</h4>
-                  <p className="text-amber-100">Mumbai, India</p>
+                  <p className="text-amber-100">Delhi, India</p>
                 </div>
               </div>
 

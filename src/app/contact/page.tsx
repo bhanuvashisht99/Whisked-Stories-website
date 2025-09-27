@@ -84,7 +84,7 @@ export default function ContactPage() {
                 <MapPin className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Visit</h3>
-              <p className="text-gray-600 text-sm mb-2">Mumbai, India</p>
+              <p className="text-gray-600 text-sm mb-2">Delhi, India</p>
               <p className="text-xs text-gray-500">By appointment only</p>
             </div>
           </div>
@@ -109,7 +109,7 @@ export default function ContactPage() {
               },
               {
                 question: "Do you deliver? What's your delivery area?",
-                answer: "Yes! We deliver across Mumbai. Delivery is free for orders above ₹2000. For smaller orders, a nominal delivery fee applies. We also offer contactless pickup from our kitchen location."
+                answer: "Yes! We deliver across Delhi and NCR. Delivery is free for orders above ₹2000. For smaller orders, a nominal delivery fee applies. We also offer contactless pickup from our kitchen location."
               },
               {
                 question: "Can you accommodate dietary restrictions?",

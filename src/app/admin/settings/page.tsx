@@ -24,7 +24,7 @@ export default function AdminSettingsPage() {
     bakeryName: 'Whisked Stories',
     tagline: 'Crafting Sweet Moments',
     description: 'A boutique bakery specializing in artisanal cakes and seasonal treats.',
-    address: 'Mumbai, Maharashtra, India',
+    address: 'Delhi, India',
     phone: '+91 9876543210',
     email: 'hello@whiskedstories.com',
 

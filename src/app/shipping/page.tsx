@@ -18,11 +18,11 @@ export default function ShippingPolicy() {
               <h2 className="text-2xl font-semibold text-neutral-900 mb-4">1. Delivery Areas</h2>
               <p className="text-neutral-700 mb-4">We currently deliver to the following areas:</p>
               <ul className="text-neutral-700 mb-6 list-disc pl-6">
-                <li>Mumbai Metropolitan Region</li>
-                <li>Navi Mumbai</li>
-                <li>Thane</li>
-                <li>Kalyan-Dombivli</li>
-                <li>Vasai-Virar</li>
+                <li>Delhi</li>
+                <li>Gurgaon (Gurugram)</li>
+                <li>Noida</li>
+                <li>Faridabad</li>
+                <li>Ghaziabad</li>
               </ul>
               <p className="text-neutral-700 mb-6">
                 We are continuously expanding our delivery network. If your area is not listed, please contact us to check if we can arrange special delivery.

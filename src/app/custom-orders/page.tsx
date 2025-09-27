@@ -29,7 +29,7 @@ const faqs = [
   },
   {
     question: "Do you provide delivery?",
-    answer: "Yes, we offer delivery within Mumbai and select areas of Navi Mumbai and Thane. Delivery charges depend on the distance and order size. We also provide setup services for elaborate cake displays."
+    answer: "Yes, we offer delivery within Delhi and select areas of NCR including Gurgaon and Noida. Delivery charges depend on the distance and order size. We also provide setup services for elaborate cake displays."
   },
   {
     question: "What's your payment process?",

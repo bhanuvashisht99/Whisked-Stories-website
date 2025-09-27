@@ -84,7 +84,7 @@ export default function AboutPage() {
                 Hi, I'm Ayushi—a passionate baker who believes that the most beautiful cakes are born from the heart, not just the oven.
               </p>
               <p className="text-lg text-gray-600 mb-8">
-                What started as weekend experiments in my tiny Mumbai kitchen has grown into something magical:
+                What started as weekend experiments in my tiny Delhi kitchen has grown into something magical:
                 a bakery where every creation carries the warmth of home and the story of its season.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -180,7 +180,7 @@ export default function AboutPage() {
 
                 <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
                   <p className="text-xl text-gray-800 font-medium">
-                    I remember the exact moment everything changed. It was a rainy Mumbai evening in 2019,
+                    I remember the exact moment everything changed. It was a rainy Delhi evening in 2019,
                     and I was making my grandmother's cardamom cake for a friend's birthday.
                   </p>
 
@@ -229,7 +229,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Every great story has chapters. Here are the moments that shaped Whisked Stories
-              from a weekend hobby into Mumbai's most heartwarming bakery experience.
+              from a weekend hobby into Delhi's most heartwarming bakery experience.
             </p>
           </div>
 

@@ -95,7 +95,7 @@ export default function TermsAndConditions() {
 
               <h2 className="text-2xl font-semibold text-neutral-900 mb-4">12. Governing Law</h2>
               <p className="text-neutral-700 mb-6">
-                These terms and conditions are governed by the laws of India. Any disputes will be subject to the jurisdiction of the courts in Mumbai, Maharashtra.
+                These terms and conditions are governed by the laws of India. Any disputes will be subject to the jurisdiction of the courts in Delhi.
               </p>
 
               <h2 className="text-2xl font-semibold text-neutral-900 mb-4">13. Contact Information</h2>
@@ -103,7 +103,7 @@ export default function TermsAndConditions() {
                 <p><strong>Whisked Stories</strong></p>
                 <p>Email: support@whiskedstories.com</p>
                 <p>Phone: +91 12345 67890</p>
-                <p>Address: Mumbai, India</p>
+                <p>Address: Delhi, India</p>
               </div>
 
               <h2 className="text-2xl font-semibold text-neutral-900 mb-4">14. Changes to Terms</h2>
