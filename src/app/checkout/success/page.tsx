@@ -6,9 +6,21 @@ import { CheckCircle, Package, Truck, Clock, Phone, Mail, ArrowRight } from 'luc
 import Link from 'next/link'
 
 export default function OrderSuccessPage() {
-  const [orderNumber] = useState(() =>
-    'WS' + Math.random().toString(36).substr(2, 9).toUpperCase()
-  )
+  const [orderNumber, setOrderNumber] = useState('')
+
+  useEffect(() => {
+    // Get order number from localStorage (set during checkout)
+    const savedOrderNumber = localStorage.getItem('lastOrderNumber')
+    if (savedOrderNumber) {
+      setOrderNumber(savedOrderNumber)
+      // Clean up
+      localStorage.removeItem('lastOrderNumber')
+      localStorage.removeItem('lastOrderId')
+    } else {
+      // Fallback if no order number found
+      setOrderNumber('WS' + Math.random().toString(36).substr(2, 9).toUpperCase())
+    }
+  }, [])
 
   return (
     <main className="pt-20 pb-12 min-h-screen bg-gray-50">

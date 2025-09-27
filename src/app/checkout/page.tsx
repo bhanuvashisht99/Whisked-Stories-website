@@ -86,12 +86,42 @@ export default function CheckoutPage() {
   const handlePlaceOrder = async () => {
     setLoading(true)
 
-    // Simulate order processing
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          customerInfo,
+          items: state.items,
+          totalAmount,
+          deliveryCharge,
+          codCharge,
+          paymentMethod: 'cod'
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to create order')
+      }
+
+      const result = await response.json()
+
+      // Store order info for success page
+      localStorage.setItem('lastOrderId', result.orderId)
+      localStorage.setItem('lastOrderNumber', result.orderNumber)
+
       // Clear cart and redirect to success page
       clearCart()
       router.push('/checkout/success')
-    }, 2000)
+
+    } catch (error) {
+      console.error('Order creation failed:', error)
+      alert('Failed to place order. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -394,10 +424,44 @@ export default function CheckoutPage() {
                         customerName={`${customerInfo.firstName} ${customerInfo.lastName}`}
                         customerEmail={customerInfo.email}
                         customerPhone={customerInfo.phone}
-                        onSuccess={(response) => {
+                        onSuccess={async (response) => {
                           console.log('Payment successful:', response)
-                          clearCart()
-                          router.push('/checkout/success')
+
+                          try {
+                            const orderResponse = await fetch('/api/orders', {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({
+                                customerInfo,
+                                items: state.items,
+                                totalAmount,
+                                deliveryCharge,
+                                codCharge,
+                                paymentMethod: 'online',
+                                paymentId: response.razorpay_payment_id
+                              }),
+                            })
+
+                            if (!orderResponse.ok) {
+                              throw new Error('Failed to create order')
+                            }
+
+                            const result = await orderResponse.json()
+
+                            // Store order info for success page
+                            localStorage.setItem('lastOrderId', result.orderId)
+                            localStorage.setItem('lastOrderNumber', result.orderNumber)
+
+                            // Clear cart and redirect to success page
+                            clearCart()
+                            router.push('/checkout/success')
+
+                          } catch (error) {
+                            console.error('Order creation failed:', error)
+                            alert('Payment successful but failed to save order. Please contact support.')
+                          }
                         }}
                         onFailure={(error) => {
                           console.error('Payment failed:', error)

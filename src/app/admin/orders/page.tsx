@@ -36,18 +36,24 @@ export default function AdminOrdersPage() {
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
+  const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null)
 
   useEffect(() => {
     fetchOrders()
-  }, [])
+  }, [statusFilter])
 
   const fetchOrders = async () => {
     try {
-      // This would normally fetch from an API endpoint
-      // For now, showing empty state
-      setOrders([])
+      const response = await fetch(`/api/orders?status=${statusFilter}&limit=50`)
+      if (!response.ok) {
+        throw new Error('Failed to fetch orders')
+      }
+
+      const data = await response.json()
+      setOrders(data.orders || [])
     } catch (error) {
       console.error('Error fetching orders:', error)
+      setOrders([])
     } finally {
       setLoading(false)
     }
@@ -58,7 +64,32 @@ export default function AdminOrdersPage() {
                          order.customer_email.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesStatus = statusFilter === 'all' || order.status === statusFilter
     return matchesSearch && matchesStatus
-  })
+  }
+
+  const updateOrderStatus = async (orderId: string, newStatus: string) => {
+    setUpdatingOrderId(orderId)
+    try {
+      const response = await fetch(`/api/orders/${orderId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update order status')
+      }
+
+      // Refetch orders to get updated data
+      await fetchOrders()
+    } catch (error) {
+      console.error('Error updating order status:', error)
+      alert('Failed to update order status')
+    } finally {
+      setUpdatingOrderId(null)
+    }
+  }
 
   if (loading) {
     return (
@@ -195,12 +226,64 @@ export default function AdminOrdersPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex justify-end space-x-2">
+                      {order.status === 'pending' && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateOrderStatus(order.id, 'confirmed')}
+                          disabled={updatingOrderId === order.id}
+                          className="text-green-600 hover:text-green-700"
+                        >
+                          <CheckCircle className="h-4 w-4" />
+                        </Button>
+                      )}
+                      {order.status === 'confirmed' && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateOrderStatus(order.id, 'preparing')}
+                          disabled={updatingOrderId === order.id}
+                          className="text-blue-600 hover:text-blue-700"
+                        >
+                          <Package className="h-4 w-4" />
+                        </Button>
+                      )}
+                      {order.status === 'preparing' && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateOrderStatus(order.id, 'ready')}
+                          disabled={updatingOrderId === order.id}
+                          className="text-purple-600 hover:text-purple-700"
+                        >
+                          Ready
+                        </Button>
+                      )}
+                      {order.status === 'ready' && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateOrderStatus(order.id, 'delivered')}
+                          disabled={updatingOrderId === order.id}
+                          className="text-green-600 hover:text-green-700"
+                        >
+                          Delivered
+                        </Button>
+                      )}
                       <Button variant="outline" size="sm">
                         <Eye className="h-4 w-4" />
                       </Button>
-                      <Button variant="outline" size="sm">
-                        <Edit className="h-4 w-4" />
-                      </Button>
+                      {order.status !== 'delivered' && order.status !== 'cancelled' && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateOrderStatus(order.id, 'cancelled')}
+                          disabled={updatingOrderId === order.id}
+                          className="text-red-600 hover:text-red-700"
+                        >
+                          <XCircle className="h-4 w-4" />
+                        </Button>
+                      )}
                     </div>
                   </td>
                 </tr>
