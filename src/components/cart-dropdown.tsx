@@ -11,13 +11,12 @@ export function CartDropdown() {
   const { state, updateQuantity, removeItem, clearCart } = useCart()
 
   const handleCheckout = () => {
-    // For now, just show an alert - in a real app this would redirect to checkout
     if (state.items.length === 0) {
       alert('Your cart is empty!')
       return
     }
-    alert(`Proceeding to checkout with ${state.itemCount} items totaling ₹${state.total.toLocaleString('en-IN')}`)
     setIsOpen(false)
+    window.location.href = '/checkout'
   }
 
   return (
