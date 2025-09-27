@@ -1,15 +1,31 @@
+'use client'
+
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Filter, ShoppingCart, Info, Star } from 'lucide-react'
-import { getProducts } from '@/lib/data/products'
-import type { Tables } from '@/lib/supabase-types'
-
-type Product = Tables<'products'>
+import { mockProducts } from '@/lib/mock-data'
+import { useCart } from '@/contexts/cart-context'
+import { useState } from 'react'
+import type { Product } from '@/types'
 
 const categories = ['All', 'Chocolate', 'Fruit', 'Classic', 'Floral', 'Seasonal']
 const seasons = ['All', 'all-year', 'spring', 'summer', 'autumn', 'winter']
 
 function ProductCard({ product }: { product: Product }) {
+  const { addItem } = useCart()
+  const [addedToCart, setAddedToCart] = useState(false)
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price
+    })
+    setAddedToCart(true)
+    setTimeout(() => setAddedToCart(false), 2000)
+  }
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-150 ease-out transform flex flex-col h-full">
       <div className="relative h-48 bg-gradient-to-br from-warm-wheat/60 to-warm-honey/40">
@@ -56,19 +72,35 @@ function ProductCard({ product }: { product: Product }) {
 
         <div className="flex justify-between items-center mt-auto">
           <span className="text-2xl font-bold text-warm-caramel">₹{product.price}</span>
-          <Button size="sm" className="inline-flex items-center gap-2">Add to Cart</Button>
+          <Button
+            size="sm"
+            className="inline-flex items-center gap-2"
+            onClick={handleAddToCart}
+          >
+            <ShoppingCart className="h-4 w-4" />
+            {addedToCart ? 'Added!' : 'Add to Cart'}
+          </Button>
         </div>
       </div>
     </div>
   )
 }
 
-// Force this page to be dynamic
-export const dynamic = 'force-dynamic'
+export default function MenuPage() {
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedSeason, setSelectedSeason] = useState('All')
 
-export default async function MenuPage() {
-  const products = await getProducts({ available: true, archived: false })
-  const activeProducts = products || []
+  // Filter products based on availability and archive status
+  const activeProducts = mockProducts.filter(product =>
+    product.is_available && !product.is_archived
+  )
+
+  // Apply filters
+  const filteredProducts = activeProducts.filter(product => {
+    const categoryMatch = selectedCategory === 'All' || product.category === selectedCategory
+    const seasonMatch = selectedSeason === 'All' || product.season === selectedSeason
+    return categoryMatch && seasonMatch
+  })
 
   return (
     <main className="pt-20 pb-12">
@@ -99,9 +131,13 @@ export default async function MenuPage() {
                 {categories.map((category) => (
                   <Button
                     key={category}
-                    variant="outline"
+                    variant={selectedCategory === category ? "default" : "outline"}
                     size="sm"
-                    className="border-warm-wheat/60 hover:bg-warm-wheat/30"
+                    className={selectedCategory === category
+                      ? "bg-warm-caramel text-white"
+                      : "border-warm-wheat/60 hover:bg-warm-wheat/30"
+                    }
+                    onClick={() => setSelectedCategory(category)}
                   >
                     {category}
                   </Button>
@@ -116,9 +152,13 @@ export default async function MenuPage() {
                 {seasons.slice(0, 4).map((season) => (
                   <Button
                     key={season}
-                    variant="outline"
+                    variant={selectedSeason === season ? "default" : "outline"}
                     size="sm"
-                    className="border-warm-wheat/60 hover:bg-warm-wheat/30 capitalize"
+                    className={selectedSeason === season
+                      ? "bg-warm-caramel text-white capitalize"
+                      : "border-warm-wheat/60 hover:bg-warm-wheat/30 capitalize"
+                    }
+                    onClick={() => setSelectedSeason(season)}
                   >
                     {season === 'all-year' ? 'All Year' : season}
                   </Button>
@@ -133,12 +173,12 @@ export default async function MenuPage() {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {activeProducts.map((product) => (
+            {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
 
-          {activeProducts.length === 0 && (
+          {filteredProducts.length === 0 && (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🔍</div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">No products found</h3>

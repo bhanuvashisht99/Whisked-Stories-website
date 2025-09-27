@@ -1,8 +1,12 @@
+'use client'
+
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { mockProducts } from '@/lib/mock-data'
 import { ArrowLeft, ShoppingCart, Star, Clock, Users, AlertTriangle, Leaf, ChefHat } from 'lucide-react'
 import { notFound } from 'next/navigation'
+import { useCart } from '@/contexts/cart-context'
+import { useState } from 'react'
 
 interface ProductPageProps {
   params: {
@@ -11,6 +15,8 @@ interface ProductPageProps {
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
+  const { addItem } = useCart()
+  const [addedToCart, setAddedToCart] = useState(false)
   const product = mockProducts.find(p => p.id === params.id)
 
   if (!product) {
@@ -18,25 +24,33 @@ export default function ProductPage({ params }: ProductPageProps) {
   }
 
   const ingredients = {
-    'prod-1': {
+    '1': {
       main: ['Premium Dark Chocolate (54% Cocoa)', 'Fresh Cream', 'Organic Eggs', 'Refined Wheat Flour', 'Cane Sugar', 'Unsalted Butter', 'Pure Vanilla Extract', 'Sea Salt'],
       garnish: ['Belgian Chocolate Shavings', 'Edible Gold Dust', 'Fresh Berries']
     },
-    'prod-2': {
+    '2': {
       main: ['Seasonal Mixed Berries', 'Organic Eggs', 'Fresh Cream', 'Refined Wheat Flour', 'Cane Sugar', 'Unsalted Butter', 'Vanilla Bean Paste'],
       garnish: ['Fresh Mint Leaves', 'Berry Compote', 'Powdered Sugar']
     },
-    'prod-3': {
+    '3': {
       main: ['Madagascar Vanilla Bean', 'Organic Eggs', 'Fresh Cream', 'Refined Wheat Flour', 'Cane Sugar', 'Unsalted Butter', 'Milk'],
       garnish: ['Vanilla Bean Pods', 'White Chocolate Curls']
     },
-    'prod-4': {
+    '4': {
       main: ['Rose Water', 'Green Cardamom', 'Organic Eggs', 'Fresh Cream', 'Refined Wheat Flour', 'Cane Sugar', 'Unsalted Butter', 'Milk'],
       garnish: ['Dried Rose Petals', 'Pistachios', 'Silver Leaf']
+    },
+    '5': {
+      main: ['Fresh Lemons', 'Culinary Lavender', 'Organic Eggs', 'Fresh Cream', 'Refined Wheat Flour', 'Cane Sugar', 'Unsalted Butter'],
+      garnish: ['Lemon Zest', 'Dried Lavender', 'White Chocolate']
+    },
+    '6': {
+      main: ['Pumpkin Puree', 'Cinnamon', 'Nutmeg', 'Organic Eggs', 'Fresh Cream', 'Refined Wheat Flour', 'Maple Syrup'],
+      garnish: ['Candied Pecans', 'Cinnamon Dust', 'Maple Drizzle']
     }
   }
 
-  const currentIngredients = ingredients[product.id as keyof typeof ingredients] || ingredients['prod-1']
+  const currentIngredients = ingredients[product.id as keyof typeof ingredients] || ingredients['1']
 
   const nutritionInfo = {
     calories: '320 per serving',
@@ -124,12 +138,24 @@ export default function ProductPage({ params }: ProductPageProps) {
             {/* Add to Cart / Order */}
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
-                <Button size="lg" className="flex-1 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white">
+                <Button
+                  size="lg"
+                  className="flex-1 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white"
+                  onClick={() => {
+                    addItem({
+                      id: product.id,
+                      name: product.name,
+                      price: product.price
+                    })
+                    setAddedToCart(true)
+                    setTimeout(() => setAddedToCart(false), 2000)
+                  }}
+                >
                   <ShoppingCart className="h-5 w-5 mr-2" />
-                  Add to Cart
+                  {addedToCart ? 'Added to Cart! ✓' : 'Add to Cart'}
                 </Button>
-                <Button variant="outline" size="lg">
-                  Customize Order
+                <Button variant="outline" size="lg" asChild>
+                  <Link href="/custom-orders">Customize Order</Link>
                 </Button>
               </div>
 
