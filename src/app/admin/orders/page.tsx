@@ -64,7 +64,7 @@ export default function AdminOrdersPage() {
                          order.customer_email.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesStatus = statusFilter === 'all' || order.status === statusFilter
     return matchesSearch && matchesStatus
-  }
+  })
 
   const updateOrderStatus = async (orderId: string, newStatus: string) => {
     setUpdatingOrderId(orderId)
